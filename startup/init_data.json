@@ -1,0 +1,14 @@
+[
+    {
+      "firstName": "Adam",
+      "lastName": "Mckay",
+      "phoneNumber": "+44703493283",
+      "emailAddress": "adam.mckay@office.com"
+    },
+    {
+        "firsNname": "Iyin",
+        "lastName": "McLoad",
+        "phoneNumber": "+447034933253",
+        "emailAddress": "iyin.mclord@office.com"
+    }
+]
