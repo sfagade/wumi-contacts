@@ -59,7 +59,8 @@ function getRequestParam(name){
         '</h5><h6 class="card-subtitle mb-2 text-muted">'+contact.emailAddress+
         '</h6><h6 class="card-subtitle mb-2 text-muted">'+contact.phoneNumber+
         '</h6><a href="update.html?id='+contact.id+
-        '" class="card-link">Edit</a><a href="#" class="card-link">Delete</a>'
+        '" class="card-link">Edit</a><a href="delete.html?id='+contact.id+
+        '" class="card-link">Delete</a>'
     );
  }
 
@@ -106,7 +107,9 @@ function deleteContact(id) {
 
         localStorage.removeItem('wumi_contacts');
         saveDataToLocalStorage(filtered);
+        return true;
     }
+    return false;
 }
 
 function updateContact() {
@@ -120,7 +123,7 @@ function updateContact() {
     contact.lastName = $('#last_name').val();
     contact.phoneNumber = $('#phone_number').val();
     contact.emailAddress = $('#email_address').val();
-    contact.id = id;
+    contact.id = Number(id);
 
     contacts_list.push(contact);
     saveDataToLocalStorage(contacts_list);
