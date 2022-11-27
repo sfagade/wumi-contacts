@@ -14,7 +14,6 @@
     <script>
        $(document).ready(function() {
          let contact = findContactById(getRequestParam("id"));
-         console.log("print contact: ", contact)
          displaySingleContact(contact);
        });
     </script>
@@ -25,7 +24,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" href="src/pages/new_contact.html">New Contacts</a>
+              <a class="nav-link" href="new_contact.html">New Contact</a>
             </li>
           </ul>
           <form class="d-flex">

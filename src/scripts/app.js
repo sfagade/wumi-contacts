@@ -57,7 +57,33 @@ function getRequestParam(name){
  function displaySingleContact(contact) {
     $('#detail_div').append('<h5 class="card-title">'+contact.firstName+" "+contact.lastName+
         '</h5><h6 class="card-subtitle mb-2 text-muted">'+contact.emailAddress+
-        '</h6><h6 class="card-subtitle mb-2 text-muted">'+contact.phoneNumber+'</h6><a href="update.html?id='+contact.id+
+        '</h6><h6 class="card-subtitle mb-2 text-muted">'+contact.phoneNumber+
+        '</h6><a href="update.html?id='+contact.id+
         '" class="card-link">Edit</a><a href="#" class="card-link">Delete</a>'
     );
  }
+
+function newContactFormSubmit() {
+    let new_contact = new Object();
+    let contacts_list = JSON.parse(localStorage.getItem('wumi_contacts'));
+
+    new_contact.firstName = $('#first_name').val();
+    new_contact.lastName = $('#last_name').val();
+    new_contact.phoneNumber = $('#phone_number').val();
+    new_contact.emailAddress = $('#email_address').val();
+    new_contact.id = contacts_list.length + 1;
+
+    contacts_list.push(new_contact);
+    saveDataToLocalStorage(contacts_list);
+    resetContactForm();
+    $('#msg_div').html('New Contact Created Successfully');
+    $('#msg_div').addClass('alert alert-success');
+    $('#msg_div').animate({opacity: 0}, 4000);
+}
+
+function resetContactForm() {
+    $('#first_name').val('');
+    $('#last_name').val('');
+    $('#phone_number').val('');
+    $('#email_address').val('');
+}
