@@ -76,9 +76,7 @@ function newContactFormSubmit() {
     contacts_list.push(new_contact);
     saveDataToLocalStorage(contacts_list);
     resetContactForm();
-    $('#msg_div').html('New Contact Created Successfully');
-    $('#msg_div').addClass('alert alert-success');
-    $('#msg_div').animate({opacity: 0}, 4000);
+    displaySuccessMessage('New Contact Created Successfully');
 }
 
 function resetContactForm() {
@@ -86,4 +84,52 @@ function resetContactForm() {
     $('#last_name').val('');
     $('#phone_number').val('');
     $('#email_address').val('');
+}
+
+function initUpdateForm(contact) {
+    if(contact) {
+        $('#first_name').val(contact.firstName);
+        $('#last_name').val(contact.lastName);
+        $('#phone_number').val(contact.phoneNumber);
+        $('#email_address').val(contact.emailAddress);
+        $('#contact_id').val(contact.id);
+    }
+}
+
+function deleteContact(id) {
+    let contacts_list = JSON.parse(localStorage.getItem('wumi_contacts'));
+
+    if(id && contacts_list) {
+        let filtered = contacts_list.filter(contact => {
+            return contact.id != id;
+         });
+
+        localStorage.removeItem('wumi_contacts');
+        saveDataToLocalStorage(filtered);
+    }
+}
+
+function updateContact() {
+    const id = $('#contact_id').val();
+    deleteContact(id);
+
+    let contact = new Object();
+    let contacts_list = JSON.parse(localStorage.getItem('wumi_contacts'));
+
+    contact.firstName = $('#first_name').val();
+    contact.lastName = $('#last_name').val();
+    contact.phoneNumber = $('#phone_number').val();
+    contact.emailAddress = $('#email_address').val();
+    contact.id = id;
+
+    contacts_list.push(contact);
+    saveDataToLocalStorage(contacts_list);
+    displaySuccessMessage('Contact Updated Successfully');
+    window.location = "details.html?id="+id;
+}
+
+function displaySuccessMessage(message) {
+    $('#msg_div').html(message);
+    $('#msg_div').addClass('alert alert-success');
+    $('#msg_div').animate({opacity: 0}, 4000);
 }
