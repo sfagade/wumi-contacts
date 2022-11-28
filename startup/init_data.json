@@ -1,6 +1,7 @@
 [
     {
       "id": 1,
+      "fullName": "Adam Mckay",
       "firstName": "Adam",
       "lastName": "Mckay",
       "phoneNumber": "+44703493283",
@@ -8,6 +9,7 @@
     },
     {
       "id": 2,
+      "fullName": "Iyin McLoad",
       "firstName": "Iyin",
       "lastName": "McLoad",
       "phoneNumber": "+447034933253",

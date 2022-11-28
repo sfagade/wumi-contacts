@@ -23,7 +23,7 @@ function displayAllContacts(contacts_list) {
         contacts_list.forEach(contact => {
             $('#contacts_ul')
                 .append('<li class="list-group-item"><a href="src/pages/details.html?id='+contact.id+'">'
-                            +contact.firstName+" "+contact.lastName+
+                            +contact.fullName+
                         '</a></li>');
             last_id = contact.id;
         });
@@ -55,7 +55,7 @@ function getRequestParam(name){
  }
 
  function displaySingleContact(contact) {
-    $('#detail_div').append('<h5 class="card-title">'+contact.firstName+" "+contact.lastName+
+    $('#detail_div').append('<h5 class="card-title">'+contact.fullName+
         '</h5><h6 class="card-subtitle mb-2 text-muted">'+contact.emailAddress+
         '</h6><h6 class="card-subtitle mb-2 text-muted">'+contact.phoneNumber+
         '</h6><a href="update.html?id='+contact.id+
@@ -72,6 +72,7 @@ function newContactFormSubmit() {
     new_contact.lastName = $('#last_name').val();
     new_contact.phoneNumber = $('#phone_number').val();
     new_contact.emailAddress = $('#email_address').val();
+    new_contact.fullName = new_contact.firstName+" "+new_contact.lastName;
     new_contact.id = contacts_list.length + 1;
 
     contacts_list.push(new_contact);
@@ -123,6 +124,7 @@ function updateContact() {
     contact.lastName = $('#last_name').val();
     contact.phoneNumber = $('#phone_number').val();
     contact.emailAddress = $('#email_address').val();
+    new_contact.fullName = contact.firstName+" "+contact.lastName;
     contact.id = Number(id);
 
     contacts_list.push(contact);
