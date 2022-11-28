@@ -78,7 +78,7 @@ function newContactFormSubmit() {
     contacts_list.push(new_contact);
     saveDataToLocalStorage(contacts_list);
     resetContactForm();
-    displaySuccessMessage('New Contact Created Successfully');
+    displaySuccessMessage('New Contact Created Successfully', 'alert alert-success');
 }
 
 function resetContactForm() {
@@ -129,12 +129,39 @@ function updateContact() {
 
     contacts_list.push(contact);
     saveDataToLocalStorage(contacts_list);
-    displaySuccessMessage('Contact Updated Successfully');
+    displaySuccessMessage('Contact Updated Successfully', 'alert alert-success');
     window.location = "details.html?id="+id;
 }
 
-function displaySuccessMessage(message) {
+function displaySuccessMessage(message, className) {
     $('#msg_div').html(message);
-    $('#msg_div').addClass('alert alert-success');
-    $('#msg_div').animate({opacity: 0}, 4000);
+    $('#msg_div').addClass(className);
+    //$('#msg_div').animate({opacity: 0}, 4000);
+    $('#msg_div').fadeIn(function() {
+        $(this).text(message)
+      }).fadeOut(4000);
+}
+
+function nameSearchClicked() {
+    console.log('Search clicked')
+    let contact_name = $('#search_name').val();
+
+    if(contact_name !== "" && contact_name.length > 0) {
+        let contacts_list = JSON.parse(localStorage.getItem('wumi_contacts'));
+        if (contacts_list) {
+            let filtered = contacts_list.filter(contact => {
+                return contact.fullName.toLowerCase().includes(contact_name.toLowerCase());
+             });
+             if(filtered && filtered.length > 0) {
+                $('#contacts_ul').html(" ");
+                displayAllContacts(filtered);
+             } else {
+                displaySuccessMessage('No contact found with name: '+contact_name, 'alert alert-danger');
+             }
+        } else {
+            console.debug("Contact list is empty ");
+        }
+    } else {
+        console.log("Contact name is empty: ", contact_name);
+    }
 }

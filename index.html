@@ -14,18 +14,22 @@
     <script>
        $(document).ready(function() {
            init();
+           $("#search_btn").click(() => {
+                nameSearchClicked();
+           });
        });
     </script>
   </head>
   <body>
-    <div class="container">
-        <ul class="list-group" id="contacts_ul">
+    <div class="container mt-5">
+        <div role="alert" id="msg_div"></div>
+        <ul class="list-group mt-2" id="contacts_ul">
         </ul>
         <div class="d-flex p-2">
-            <a href="src/pages/new_contact.html" class="btn btn-secondary">New Contact</a>
+            <a href="src/pages/new_contact.html" class="btn btn-primary">New Contact</a>
         </div>
         <div class="mb-3 mt-4">
-           <input class="form-control me-2" type="search" placeholder="Search by name" aria-label="Find" />
+           <input class="form-control me-2" type="search" placeholder="Search by name" id="search_name" aria-label="Find" />
            <img class="mt-2 float-end" alt="Search" src="src/pages/images/search.png" width="44" id="search_btn" />
         </div>
     </div>
