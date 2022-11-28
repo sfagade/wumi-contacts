@@ -23,7 +23,7 @@ function displayAllContacts(contacts_list) {
         contacts_list.forEach(contact => {
             $('#contacts_ul')
                 .append('<li class="list-group-item"><a href="src/pages/details.html?id='+contact.id+'">'
-                            +contact.firstName+" "+contact.lastName+
+                            +contact.fullName+
                         '</a></li>');
             last_id = contact.id;
         });
@@ -55,7 +55,7 @@ function getRequestParam(name){
  }
 
  function displaySingleContact(contact) {
-    $('#detail_div').append('<h5 class="card-title">'+contact.firstName+" "+contact.lastName+
+    $('#detail_div').append('<h5 class="card-title">'+contact.fullName+
         '</h5><h6 class="card-subtitle mb-2 text-muted">'+contact.emailAddress+
         '</h6><h6 class="card-subtitle mb-2 text-muted">'+contact.phoneNumber+
         '</h6><a href="update.html?id='+contact.id+
@@ -72,12 +72,13 @@ function newContactFormSubmit() {
     new_contact.lastName = $('#last_name').val();
     new_contact.phoneNumber = $('#phone_number').val();
     new_contact.emailAddress = $('#email_address').val();
+    new_contact.fullName = new_contact.firstName+" "+new_contact.lastName;
     new_contact.id = contacts_list.length + 1;
 
     contacts_list.push(new_contact);
     saveDataToLocalStorage(contacts_list);
     resetContactForm();
-    displaySuccessMessage('New Contact Created Successfully');
+    displaySuccessMessage('New Contact Created Successfully', 'alert alert-success');
 }
 
 function resetContactForm() {
@@ -123,16 +124,44 @@ function updateContact() {
     contact.lastName = $('#last_name').val();
     contact.phoneNumber = $('#phone_number').val();
     contact.emailAddress = $('#email_address').val();
+    new_contact.fullName = contact.firstName+" "+contact.lastName;
     contact.id = Number(id);
 
     contacts_list.push(contact);
     saveDataToLocalStorage(contacts_list);
-    displaySuccessMessage('Contact Updated Successfully');
+    displaySuccessMessage('Contact Updated Successfully', 'alert alert-success');
     window.location = "details.html?id="+id;
 }
 
-function displaySuccessMessage(message) {
+function displaySuccessMessage(message, className) {
     $('#msg_div').html(message);
-    $('#msg_div').addClass('alert alert-success');
-    $('#msg_div').animate({opacity: 0}, 4000);
+    $('#msg_div').addClass(className);
+    //$('#msg_div').animate({opacity: 0}, 4000);
+    $('#msg_div').fadeIn(function() {
+        $(this).text(message)
+      }).fadeOut(4000);
+}
+
+function nameSearchClicked() {
+    console.log('Search clicked')
+    let contact_name = $('#search_name').val();
+
+    if(contact_name !== "" && contact_name.length > 0) {
+        let contacts_list = JSON.parse(localStorage.getItem('wumi_contacts'));
+        if (contacts_list) {
+            let filtered = contacts_list.filter(contact => {
+                return contact.fullName.toLowerCase().includes(contact_name.toLowerCase());
+             });
+             if(filtered && filtered.length > 0) {
+                $('#contacts_ul').html(" ");
+                displayAllContacts(filtered);
+             } else {
+                displaySuccessMessage('No contact found with name: '+contact_name, 'alert alert-danger');
+             }
+        } else {
+            console.debug("Contact list is empty ");
+        }
+    } else {
+        console.log("Contact name is empty: ", contact_name);
+    }
 }
