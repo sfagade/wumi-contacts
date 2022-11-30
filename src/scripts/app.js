@@ -143,7 +143,6 @@ function displaySuccessMessage(message, className) {
 }
 
 function nameSearchClicked() {
-    console.log('Search clicked')
     let contact_name = $('#search_name').val();
 
     if(contact_name !== "" && contact_name.length > 0) {
@@ -162,6 +161,39 @@ function nameSearchClicked() {
             console.debug("Contact list is empty ");
         }
     } else {
-        console.log("Contact name is empty: ", contact_name);
+        displaySuccessMessage('Contact name is empty');
+    }
+}
+
+function filterContactList() {
+    let search_name = $('#contact_name').val();
+    let phone_number = $('#phone_number').val();
+    let email_address = $('#email_address').val();
+
+    if (search_name !== '' || phone_number !== '' || email_address !== '') {
+        let contacts_list = JSON.parse(localStorage.getItem('wumi_contacts'));
+        let filtered_list = [];
+
+        if (search_name !== '') {
+            filtered_list = contacts_list.filter(contact => {
+                return contact.fullName.toLowerCase().includes(search_name.toLowerCase());
+            });
+        } else if (phone_number !== '') {
+            filtered_list = contacts_list.filter(contact => {
+                return contact.phoneNumber.includes(phone_number);
+            });
+        } else if (email_address !== '') {
+            filtered_list = contacts_list.filter(contact => {
+                return contact.emailAddress.toLowerCase().includes(email_address.toLowerCase());
+            });
+        }
+
+        if (filtered_list.length > 0) {
+            $('#contacts_ul').html(" ");
+            displayAllContacts(filtered_list);
+        }
+
+    } else {
+        displaySuccessMessage('No search criteria specified', 'alert alert-danger');
     }
 }
