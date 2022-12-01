@@ -4,7 +4,7 @@ function init() {
     let contacts_list = JSON.parse(localStorage.getItem('wumi_contacts'));
 
     if (!contacts_list) {
-        $.getJSON('startup/init_data.json', function(contact_json) {
+        $.getJSON('/esstartup/init_data.json', function(contact_json) {
             console.log("json loaded: ", contact_json);
             contacts_list = contact_json;
             saveDataToLocalStorage(contacts_list);
@@ -22,7 +22,7 @@ function displayAllContacts(contacts_list) {
     if (contacts_list) {
         contacts_list.forEach(contact => {
             $('#contacts_ul')
-                .append('<li class="list-group-item"><a href="src/pages/details.html?id='+contact.id+'" class="text-decoration-none">'
+                .append('<li class="list-group-item"><a href="/src/pages/details.html?id='+contact.id+'" class="text-decoration-none">'
                             +contact.fullName+
                         '</a></li>');
             last_id = contact.id;
