@@ -17,16 +17,33 @@
            $("#search_btn").click(() => {
                 nameSearchClicked();
            });
+
+           $('#sort_asc').click(() => {
+                sortContactList("firstName", "asc");
+           });
+
+           $('#sort_desc').click(() => {
+                sortContactList("firstName");
+           });
        });
     </script>
   </head>
   <body>
     <div class="container mt-5">
         <div class="mb-3 mt-4">
-            <a href="src/pages/filter.html" id="filter_btn">
+            <a href="src/pages/filter.html" id="filter_btn" class="text-decoration-none">
                 <img class="mt-2" alt="Filter" src="src/pages/images/empty-filter.png" width="32" />
             </a>
             <span class="mt-2">Filter</span>
+            <div class="btn-group float-end">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Sort
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a href="#" class="dropdown-item" id="sort_asc">Ascending</a></li>
+                  <li><a href="#" class="dropdown-item" id="sort_desc">Descending</a></li>
+                </ul>
+            </div>
         </div>
         <div role="alert" id="msg_div"></div>
         <ul class="list-group mt-2" id="contacts_ul">
