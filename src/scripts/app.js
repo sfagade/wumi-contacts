@@ -4,7 +4,7 @@ function init() {
     let contacts_list = JSON.parse(localStorage.getItem('wumi_contacts'));
 
     if (!contacts_list) {
-        $.getJSON('startup/init_data.json', function(contact_json) {
+        $.getJSON('/esstartup/init_data.json', function(contact_json) {
             console.log("json loaded: ", contact_json);
             contacts_list = contact_json;
             saveDataToLocalStorage(contacts_list);
@@ -22,7 +22,7 @@ function displayAllContacts(contacts_list) {
     if (contacts_list) {
         contacts_list.forEach(contact => {
             $('#contacts_ul')
-                .append('<li class="list-group-item"><a href="src/pages/details.html?id='+contact.id+'">'
+                .append('<li class="list-group-item"><a href="/src/pages/details.html?id='+contact.id+'" class="text-decoration-none">'
                             +contact.fullName+
                         '</a></li>');
             last_id = contact.id;
@@ -55,12 +55,16 @@ function getRequestParam(name){
  }
 
  function displaySingleContact(contact) {
-    $('#detail_div').append('<h5 class="card-title">'+contact.fullName+
-        '</h5><h6 class="card-subtitle mb-2 text-muted">'+contact.emailAddress+
-        '</h6><h6 class="card-subtitle mb-2 text-muted">'+contact.phoneNumber+
-        '</h6><a href="update.html?id='+contact.id+
-        '" class="card-link">Edit</a><a href="delete.html?id='+contact.id+
-        '" class="card-link">Delete</a>'
+    $('#detail_div').append('<h5 class="card-title pb-3">'+contact.fullName+'</h5>'+
+        '<h6 class="card-subtitle mb-2 text-muted pb-3">'+contact.emailAddress+
+            '<span class="float-end"><img src="/src/pages/images/new-post.png" atl="email" title="Click here to send email" width="22"/><span></h6>'+
+        '<h6 class="card-subtitle mb-2 text-muted pb-3">'+contact.phoneNumber+'<span class="float-end">'+
+            '<img src="/src/pages/images/ringer-volume.png" atl="call" title="Click here to call this number" class="mr-2" width="22"/>'+
+            '<img src="/src/pages/images/new-post.png" atl="SMS" title="Click here to send SMS" width="22"/><span></h6>'+
+        '<div class="pt-3"><a href="update.html?id='+contact.id+'" class="card-link text-decoration-none" title="Click to edit contact">'+
+            '<img src="/src/pages/images/pencil.png" atl="edit" width="22"/></a>'+
+        '<a href="delete.html?id='+contact.id+'" class="card-link text-decoration-none" title="Click to delete contact" id="delete_link">'+
+            '<img src="/src/pages/images/delete-forever.png" atl="delete" width="22"/></a></div>'
     );
  }
 
@@ -196,4 +200,18 @@ function filterContactList() {
     } else {
         displaySuccessMessage('No search criteria specified', 'alert alert-danger');
     }
+}
+
+function sortContactList(prop, asc) {
+    let contacts_list = JSON.parse(localStorage.getItem('wumi_contacts'));
+
+    contacts_list.sort(function(a, b) {
+        if (asc) {
+            return (a[prop] > b[prop]) ? 1 : ((a[prop] < b[prop]) ? -1 : 0);
+        } else {
+            return (b[prop] > a[prop]) ? 1 : ((b[prop] < a[prop]) ? -1 : 0);
+        }
+    });
+    $('#contacts_ul').html(" ");
+    displayAllContacts(contacts_list);
 }
