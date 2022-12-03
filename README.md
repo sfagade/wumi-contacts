@@ -12,6 +12,10 @@ Technical
         records in the browser’s local storage. If no record is found, it will load the data from the startup/init_data.json file and store it in the
         browser’s local storage. All subsequent requests for contact data will then be retrieved from the browser’s local storage.
 
+    Known Bug
+        On first start, the application will load data from the json file, but the data might not reflect on the page and users will need to reload
+        the page to get the data to show.
+
 Non-Technical
     Landing Page (index.html)
         This shows all the contacts in the application. All contacts on this page are clickable, and clicking on the contacts will take the user to the contact detail page.
