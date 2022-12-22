@@ -8,9 +8,10 @@ export default function Home({preview}) {
       <Layout preview={preview}>
         <Head>
           <title>Wumi's Contact Manager</title>
+          <link href="/dist/output.css" rel="stylesheet"></link>
         </Head>
         <Container>
-          <div>This is my content!!</div>
+          <div className="text-3xl font-bold underline">This is my content!!</div>
         </Container>
       </Layout>
     </>
