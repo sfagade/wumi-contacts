@@ -2,15 +2,16 @@ import Head from 'next/head'
 import Layout from '../components/layout'
 import Container from '../components/container'
 import Header from '../components/header'
-import ContactsDisplay from '../components/contacts-display'
+import ContactsDisplay from '../components/contacts_display'
+
 
 export default function Home({contacts_list}) {
+
   return (
     <>
       <Layout>
         <Head>
           <title>Wumi's Contact Manager</title>
-          <link href="/dist/output.css" rel="stylesheet"></link>
         </Head>
         <Header />
         <Container>
@@ -21,7 +22,7 @@ export default function Home({contacts_list}) {
   )
 }
 
-export async function getServerSideProps() {
+/** export async function getServerSideProps() {
 
   console.log('Static props called')
   let contacts_list = [
@@ -48,4 +49,4 @@ export async function getServerSideProps() {
       contacts_list
     }, // will be passed to the page component as props
   }
-}
+}*/
